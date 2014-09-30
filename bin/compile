@@ -153,6 +153,9 @@ source $BIN_DIR/steps/python
 # Sanity check for setuptools/distribute.
 source $BIN_DIR/steps/setuptools
 
+# Install FreeTDS
+source $BIN_DIR/steps/freetds
+
 # Uninstall removed dependencies with Pip.
 source $BIN_DIR/steps/pip-uninstall
 

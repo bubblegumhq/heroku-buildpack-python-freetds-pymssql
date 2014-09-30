@@ -1,0 +1,60 @@
+if [ ! -f $CACHE_DIR/.vendor/freetds-version ]; then
+   bpwatch start install_freetds
+
+      if [ -n "$CC" ]; then
+         OLD_CC=$(CC)
+      fi
+      if [ -n "$CFLAGS" ]; then
+         OLD_CFLAGS=$(CFLAGS)
+      fi
+
+      mkdir -p $CACHE_DIR/.vendor/gawk
+      mkdir $CACHE_DIR/.vendor/txt2man
+      mkdir $CACHE_DIR/.vendor/freetds
+      mkdir -p $BUILD_DIR/.vendor
+      
+      cd $CACHE_DIR/.vendor/gawk
+      puts-step "Fetching gawk"
+      curl -O http://ftp.gnu.org/gnu/gawk/gawk-3.1.8.tar.gz > /dev/null 2>&1
+      tar -xzf gawk-3.1.8.tar.gz
+      cp -r $CACHE_DIR/.vendor/gawk/gawk-3.1.8 $BUILD_DIR/.vendor/gawk
+      cd $BUILD_DIR/.vendor/gawk
+      puts-step "Installing gawk"
+      CC=cc CFLAGS=-g sh ./configure --prefix=$BUILD_DIR | indent
+      make | indent
+      make install | indent
+
+      puts-step "Fetching txt2man"
+      cd  $CACHE_DIR/.vendor/txt2man
+      curl -O ftp://ftp.debian.com/debian/pool/main/t/txt2man/txt2man_1.5.5.orig.tar.gz > /dev/null 2>&1
+      tar -xzf txt2man_1.5.5.orig.tar.gz
+
+      puts-step "Fetching FreeTDS"
+      cd $CACHE_DIR/.vendor/freetds
+      curl -O ftp://ftp.freetds.org/pub/freetds/stable/freetds-0.91.tar.gz > /dev/null 2>&1
+      tar -xzf freetds-0.91.tar.gz
+      cp -r $CACHE_DIR/.vendor/freetds/freetds-0.91 $BUILD_DIR/.vendor/freetds
+      cp $CACHE_DIR/.vendor/txt2man/txt2man-1.5.5/txt2man $BUILD_DIR/.vendor/freetds/doc/txt2man
+      cd  $BUILD_DIR/.vendor/freetds
+      puts-step "Installing FreeTDS"
+      ./configure --prefix=$BUILD_DIR | indent
+      make | indent
+      make install | indent
+
+      export PYMSSQL_BUILD_WITH_BUNDLED_FREETDS="Y"
+      puts-step "Installing pymssql with pip"
+      pip install pymssql==2.1.0 | indent
+
+      echo "0.91" > $CACHE_DIR/.vendor/freetds-version
+
+      if [ -n "$OLD_CC" ]; then
+         CC=$(OLD_CC)
+      fi
+      if [ -n "$OLD_CFLAGS" ]; then
+         CFLAGS=$(OLD_CFLAGS)
+      fi
+
+      cd $BUILD_DIR
+
+   bpwatch stop install_freetds
+fi
