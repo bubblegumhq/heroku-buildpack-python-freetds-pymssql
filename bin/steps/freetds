@@ -37,6 +37,8 @@ if [ ! -f $CACHE_DIR/.vendor/freetds-version ]; then
       cp -r $ROOT_DIR/vendor/freetds-0.91 $BUILD_DIR/.vendor/
 #      cp $CACHE_DIR/.vendor/txt2man/txt2man-1.5.5/txt2man $BUILD_DIR/.vendor/freetds/doc/txt2man
       cd  $BUILD_DIR/.vendor/freetds
+      pwd
+      ls -alth
       puts-step "Installing FreeTDS"
       ./configure --prefix=$BUILD_DIR | indent
       make | indent
