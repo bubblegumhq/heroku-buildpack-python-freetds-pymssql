@@ -9,7 +9,7 @@ if [ ! -f $CACHE_DIR/.vendor/freetds-version ]; then
       fi
 
       # mkdir -p $CACHE_DIR/.vendor/gawk
-      # mkdir $CACHE_DIR/.vendor/txt2man
+      mkdir -p $CACHE_DIR/.vendor/txt2man
       mkdir -p $CACHE_DIR/.vendor/freetds
       mkdir -p $BUILD_DIR/.vendor
       
@@ -24,17 +24,17 @@ if [ ! -f $CACHE_DIR/.vendor/freetds-version ]; then
       # make | indent
       # make install | indent
 
-      # puts-step "Fetching txt2man"
-      # cd  $CACHE_DIR/.vendor/txt2man
-      # curl -O ftp://ftp.debian.com/debian/pool/main/t/txt2man/txt2man_1.5.5.orig.tar.gz > /dev/null 2>&1
-      # tar -xzf txt2man_1.5.5.orig.tar.gz
+      puts-step "Fetching txt2man"
+      cd  $CACHE_DIR/.vendor/txt2man
+      curl -O ftp://ftp.debian.com/debian/pool/main/t/txt2man/txt2man_1.5.5.orig.tar.gz > /dev/null 2>&1
+      tar -xzf txt2man_1.5.5.orig.tar.gz
 
       puts-step "Fetching FreeTDS"
       cd $CACHE_DIR/.vendor/freetds
       curl -O ftp://ftp.freetds.org/pub/freetds/stable/freetds-0.91.tar.gz > /dev/null 2>&1
       tar -xzf freetds-0.91.tar.gz
       cp -r $CACHE_DIR/.vendor/freetds/freetds-0.91 $BUILD_DIR/.vendor/freetds
-      # cp $CACHE_DIR/.vendor/txt2man/txt2man-1.5.5/txt2man $BUILD_DIR/.vendor/freetds/doc/txt2man
+      cp $CACHE_DIR/.vendor/txt2man/txt2man-1.5.5/txt2man $BUILD_DIR/.vendor/freetds/doc/txt2man
       cd  $BUILD_DIR/.vendor/freetds
       puts-step "Installing FreeTDS"
       ./configure --prefix=$BUILD_DIR | indent
