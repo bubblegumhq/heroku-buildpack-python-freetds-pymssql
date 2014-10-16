@@ -10,7 +10,7 @@ if [ ! -f $CACHE_DIR/.vendor/freetds-version ]; then
 
       # mkdir -p $CACHE_DIR/.vendor/gawk
       # mkdir $CACHE_DIR/.vendor/txt2man
-      mkdir $CACHE_DIR/.vendor/freetds
+      mkdir -p $CACHE_DIR/.vendor/freetds
       mkdir -p $BUILD_DIR/.vendor
       
       # cd $CACHE_DIR/.vendor/gawk
