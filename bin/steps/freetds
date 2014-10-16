@@ -35,9 +35,9 @@ if [ ! -f $CACHE_DIR/.vendor/freetds-version ]; then
 #      curl -O ftp://ftp.freetds.org/pub/freetds/stable/freetds-0.91.tar.gz > /dev/null 2>&1
       tar -xzf freetds-0.91.tar.gz
       ls -alth
-      cp -r $ROOT_DIR/vendor/freetds-0.91 $BUILD_DIR/.vendor/freetds
+#      cp -r $ROOT_DIR/vendor/freetds-0.91 $BUILD_DIR/.vendor/freetds
 #      cp $CACHE_DIR/.vendor/txt2man/txt2man-1.5.5/txt2man $BUILD_DIR/.vendor/freetds/doc/txt2man
-      cd  $BUILD_DIR/.vendor/freetds
+      cd  $ROOT_DIR/.vendor/freetds-0.91
       pwd
       ls -alth
       ls .. -alth
